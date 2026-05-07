@@ -1,5 +1,8 @@
 "use client";
 
+import { StatusBar } from "@/components/StatusBar";
+import { Footer } from "@/components/Footer";
+
 import React, { useState } from 'react';
 import { jupiterProbe } from '@/lib/jupiter';
 
@@ -55,6 +58,8 @@ export default function Home() {
   };
 
   return (
+    <>
+      <StatusBar />
     <main className="min-h-screen flex flex-col bg-slate-950 font-mono text-slate-300">
       <header className="border-b border-slate-800 bg-slate-950 p-4 px-6 flex justify-between items-center">
         <div className="flex items-center gap-3">
@@ -196,5 +201,7 @@ export default function Home() {
         </div>
       </div>
     </main>
+      <Footer />
+    </>
   );
 }
