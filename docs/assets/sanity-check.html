@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020617;color:#F8FAFC;font-family:'Inter',sans-serif;padding:32px}
+h1{font-family:'Orbitron',sans-serif;font-size:24px;margin-bottom:24px;background:linear-gradient(135deg,#22C55E,#06B6D4);-webkit-background-clip:text;color:transparent}
+.cors-warning{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#F59E0B;padding:12px 20px;border-radius:8px;margin-bottom:24px;font-size:14px}
+.cors-warning code{background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.cell{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px}
+.cell-label{font-family:'JetBrains Mono',monospace;font-size:13px;color:#94A3B8;margin-bottom:8px}
+.cell-check{font-size:12px;color:#475569;margin-top:8px}
+.frame-wrap{position:relative;overflow:hidden;width:100%;border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
+.frame-wrap iframe{position:absolute;top:0;left:0;border:0}
+.icon-row{display:flex;gap:16px;align-items:end}
+.icon-row img{border-radius:8px;border:1px solid rgba(255,255,255,0.08)}
+</style></head><body>
+<div class="cors-warning">⚠️ Iframes won't load over file://. Run <code>npm run preview</code> and open the served URL.</div>
+<h1>Juprobe — Asset Sanity Check</h1>
+<div class="grid">
+<div class="cell">
+<div class="cell-label">generate-og-image.html · 1200×630</div>
+<div class="frame-wrap" style="aspect-ratio:1200/630"><iframe src="./generate-og-image.html" style="width:1200px;height:630px;transform:scale(calc(100%/1200));transform-origin:top left"></iframe></div>
+<div class="cell-check">✅ legible at thumb-size?</div>
+</div>
+<div class="cell">
+<div class="cell-label">generate-youtube-thumbnail.html · 1280×720</div>
+<div class="frame-wrap" style="aspect-ratio:1280/720"><iframe src="./generate-youtube-thumbnail.html" style="width:1280px;height:720px;transform:scale(calc(100%/1280));transform-origin:top left"></iframe></div>
+<div class="cell-check">✅ message lands at 200px wide?</div>
+</div>
+<div class="cell">
+<div class="cell-label">generate-devpost-thumbnail.html · 1200×800</div>
+<div class="frame-wrap" style="aspect-ratio:1200/800"><iframe src="./generate-devpost-thumbnail.html" style="width:1200px;height:800px;transform:scale(calc(100%/1200));transform-origin:top left"></iframe></div>
+<div class="cell-check">✅ premium SaaS feel?</div>
+</div>
+<div class="cell">
+<div class="cell-label">generate-devpost-gallery.html · 1200×800</div>
+<div class="frame-wrap" style="aspect-ratio:1200/800"><iframe src="./generate-devpost-gallery.html" style="width:1200px;height:800px;transform:scale(calc(100%/1200));transform-origin:top left"></iframe></div>
+<div class="cell-check">✅ diagram tells a story?</div>
+</div>
+<div class="cell">
+<div class="cell-label">generate-readme-hero.html · 1280×640</div>
+<div class="frame-wrap" style="aspect-ratio:1280/640"><iframe src="./generate-readme-hero.html" style="width:1280px;height:640px;transform:scale(calc(100%/1280));transform-origin:top left"></iframe></div>
+<div class="cell-check">✅ reads well at 1012px GitHub column?</div>
+</div>
+<div class="cell">
+<div class="cell-label">icon.svg · 512 / 128 / 32</div>
+<div class="icon-row">
+<div><img src="./icon.svg" width="128" height="128"><div class="cell-label" style="margin-top:4px">128px</div></div>
+<div><img src="./icon.svg" width="64" height="64"><div class="cell-label" style="margin-top:4px">64px</div></div>
+<div><img src="./icon.svg" width="32" height="32"><div class="cell-label" style="margin-top:4px">32px</div></div>
+</div>
+<div class="cell-check">✅ recognizable at 32×32?</div>
+</div>
+</div>
+<div style="margin-top:24px">
+<div class="cell-label">generate-readme-hero.html at 1012px (GitHub column)</div>
+<div class="frame-wrap" style="aspect-ratio:1280/640;max-width:1012px"><iframe src="./generate-readme-hero.html" style="width:1280px;height:640px;transform:scale(calc(1012/1280));transform-origin:top left"></iframe></div>
+</div>
+</body></html>
