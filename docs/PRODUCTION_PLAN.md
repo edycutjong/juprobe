@@ -16,5 +16,5 @@ Vercel frontend, Supabase benchmark history
 ## Pre-Submission Checklist
 - [ ] Core SDK features working
 - [ ] Demo video recorded (< 3 min)
-- [ ] bench.py latency results included
-- [ ] README with architecture diagram
+- [x] bench.py latency results included
+- [x] README with architecture diagram
