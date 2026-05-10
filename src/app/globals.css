@@ -335,3 +335,36 @@
 .stagger-4 { animation-delay: 0.2s; }
 .stagger-5 { animation-delay: 0.25s; }
 .stagger-6 { animation-delay: 0.3s; }
+
+/* ═══════════════════════════════════════════════════════════
+   PRINT STYLES FOR PDF EXPORT
+   ═══════════════════════════════════════════════════════════ */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .bg-grid-pattern, .bg-orb, header, footer, .glow-button, nav {
+    display: none !important;
+  }
+
+  .glass-card, .glass-card-static {
+    background: none !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    break-inside: avoid;
+  }
+  
+  * {
+    color: black !important;
+    text-shadow: none !important;
+  }
+  
+  .gradient-text {
+    background: none !important;
+    -webkit-text-fill-color: black !important;
+    color: black !important;
+  }
+}

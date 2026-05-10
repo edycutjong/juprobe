@@ -410,7 +410,10 @@ export default function Home() {
                           Probed {ENDPOINTS.length} endpoints • 30,000 total requests • 5 min sustained load
                         </p>
                       </div>
-                      <button className="glow-button flex items-center gap-2 bg-slate-800/80 hover:bg-slate-700 text-white px-5 py-2.5 rounded-lg text-sm transition-all border border-slate-700/50">
+                      <button 
+                        onClick={() => window.print()}
+                        className="glow-button flex items-center gap-2 bg-slate-800/80 hover:bg-slate-700 text-white px-5 py-2.5 rounded-lg text-sm transition-all border border-slate-700/50"
+                      >
                         <FileText className="w-4 h-4" />
                         Export PDF
                       </button>
