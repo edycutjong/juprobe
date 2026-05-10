@@ -1,503 +1,127 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Juprobe — Pitch Deck</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-
-    <style>
-      :root {
-        --green: #22c55e;
-        --green-dim: #16a34a;
-        --cyan: #06b6d4;
-        --amber: #f59e0b;
-        --red: #ef4444;
-        --slate-300: #cbd5e1;
-        --slate-500: #64748b;
-        --slate-800: #1e293b;
-        --slate-900: #0f172a;
-        --slate-950: #020617;
-      }
-
-      .reveal { font-family: 'Inter', system-ui, sans-serif; }
-      .reveal .slide-background { background: var(--slate-950) !important; }
-      .reveal h1, .reveal h2, .reveal h3 {
-        text-transform: none;
-        font-family: 'Inter', system-ui, sans-serif;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-      }
-
-      /* ── Particle canvas ── */
-      #particles {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: 0; pointer-events: none;
-      }
-
-      /* ── Glitch title ── */
-      .glitch {
-        position: relative;
-        font-size: 5em;
-        font-weight: 900;
-        color: #fff;
-        letter-spacing: -0.04em;
-      }
-      .glitch::before, .glitch::after {
-        content: attr(data-text);
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      }
-      .glitch::before {
-        color: var(--cyan);
-        animation: glitch-1 3s infinite linear;
-        clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-      }
-      .glitch::after {
-        color: var(--green);
-        animation: glitch-2 3s infinite linear;
-        clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
-      }
-      @keyframes glitch-1 {
-        0%,100% { transform: translate(0); }
-        20% { transform: translate(-3px, 2px); }
-        40% { transform: translate(3px, -1px); }
-        60% { transform: translate(-2px, 1px); }
-        80% { transform: translate(2px, -2px); }
-      }
-      @keyframes glitch-2 {
-        0%,100% { transform: translate(0); }
-        20% { transform: translate(3px, -2px); }
-        40% { transform: translate(-3px, 1px); }
-        60% { transform: translate(2px, -1px); }
-        80% { transform: translate(-2px, 2px); }
-      }
-
-      /* ── Gradient accent text ── */
-      .brand-grad {
-        background: linear-gradient(135deg, var(--green), var(--cyan));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 900;
-      }
-
-      /* ── Terminal box ── */
-      .terminal {
-        background: rgba(2, 6, 23, 0.9);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        border-radius: 10px;
-        padding: 28px 32px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.45em;
-        text-align: left;
-        line-height: 1.9;
-        box-shadow: 0 0 40px rgba(34, 197, 94, 0.08), inset 0 0 60px rgba(34, 197, 94, 0.03);
-      }
-      .terminal .prompt { color: var(--green); }
-      .terminal .ok { color: var(--slate-300); }
-      .terminal .err { color: var(--red); }
-      .terminal .sys { color: var(--cyan); }
-      .terminal .cursor {
-        display: inline-block; width: 8px; height: 16px;
-        background: var(--green);
-        animation: blink 1s step-end infinite;
-        vertical-align: middle; margin-left: 4px;
-      }
-      @keyframes blink { 50% { opacity: 0; } }
-
-      /* ── Metric cards ── */
-      .metric-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        margin-top: 40px;
-      }
-      .metric-card {
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid rgba(34, 197, 94, 0.2);
-        border-radius: 14px;
-        padding: 32px 20px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        transition: border-color 0.4s, transform 0.3s;
-      }
-      .metric-card:hover {
-        border-color: var(--green);
-        transform: translateY(-4px);
-      }
-      .metric-card::before {
-        content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 2px;
-        background: linear-gradient(90deg, transparent, var(--green), transparent);
-        animation: scan 3s ease-in-out infinite;
-      }
-      @keyframes scan { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
-      .metric-val {
-        font-size: 2.8em;
-        font-weight: 900;
-        color: var(--green);
-        text-shadow: 0 0 30px rgba(34, 197, 94, 0.4);
-        line-height: 1;
-      }
-      .metric-val.cyan { color: var(--cyan); text-shadow: 0 0 30px rgba(6, 182, 212, 0.4); }
-      .metric-val.amber { color: var(--amber); text-shadow: 0 0 30px rgba(245, 158, 11, 0.4); }
-      .metric-label {
-        font-size: 0.42em;
-        color: var(--slate-500);
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        margin-top: 12px;
-      }
-
-      /* ── Feature cards ── */
-      .feature-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 28px;
-        margin-top: 36px;
-      }
-      .feature-card {
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 14px;
-        padding: 36px 28px;
-        text-align: left;
-        transition: border-color 0.3s, box-shadow 0.3s;
-      }
-      .feature-card:hover {
-        border-color: rgba(34, 197, 94, 0.4);
-        box-shadow: 0 0 30px rgba(34, 197, 94, 0.06);
-      }
-      .feature-icon {
-        font-size: 2em;
-        margin-bottom: 16px;
-        display: inline-block;
-        filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));
-      }
-      .feature-card h3 {
-        font-size: 0.85em !important;
-        color: #fff;
-        margin: 0 0 8px 0 !important;
-      }
-      .feature-card p {
-        font-size: 0.48em;
-        color: var(--slate-500);
-        margin: 0;
-        line-height: 1.6;
-      }
-
-      /* ── Finding blocks ── */
-      .finding {
-        background: rgba(15, 23, 42, 0.8);
-        border-left: 4px solid;
-        border-radius: 0 10px 10px 0;
-        padding: 24px 28px;
-        margin: 18px 0;
-        text-align: left;
-      }
-      .finding.critical { border-color: var(--red); }
-      .finding.warning { border-color: var(--amber); }
-      .finding .tag {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.35em;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 6px;
-      }
-      .finding.critical .tag { color: var(--red); }
-      .finding.warning .tag { color: var(--amber); }
-      .finding .desc {
-        font-size: 0.5em;
-        color: var(--slate-300);
-        line-height: 1.5;
-      }
-      .finding code {
-        background: rgba(255,255,255,0.06);
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.9em;
-        color: var(--cyan);
-      }
-
-      /* ── CTA card ── */
-      .cta-box {
-        background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(6,182,212,0.08));
-        border: 1px solid rgba(34, 197, 94, 0.25);
-        border-radius: 16px;
-        padding: 40px;
-        margin-top: 36px;
-      }
-      .cta-box a {
-        color: var(--green);
-        text-decoration: none;
-        font-weight: 700;
-        transition: color 0.2s;
-      }
-      .cta-box a:hover { color: var(--cyan); }
-
-      /* ── Badge ── */
-      .badge {
-        display: inline-block;
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        color: var(--green);
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.35em;
-        padding: 6px 16px;
-        border-radius: 20px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-      }
-
-      /* ── Subtle fade-up for fragments ── */
-      .reveal .slides section .fragment {
-        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-      }
-      .reveal .slides section .fragment.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .reveal .slides section .fragment:not(.visible) {
-        transform: translateY(20px);
-      }
-
-      /* ── Subtext ── */
-      .sub { color: var(--slate-500); font-size: 0.55em; margin-top: -8px; }
-      .reveal section { text-align: center; }
-    </style>
-  </head>
-  <body>
-    <canvas id="particles"></canvas>
-
-    <div class="reveal">
-      <div class="slides">
-
-        <!-- ═══ SLIDE 1: TITLE ═══ -->
-        <section>
-          <div class="badge" style="margin-bottom: 24px;">Colosseum Frontier Hackathon 2026</div>
-          <h1 class="glitch" data-text="JUPROBE">JUPROBE</h1>
-          <p style="font-size: 0.7em; color: var(--slate-300); max-width: 700px; margin: 16px auto 0; line-height: 1.6;">
-            Stress test every Jupiter API endpoint.<br>
-            Measure latency. Generate actionable DX reports.
-          </p>
-          <div style="margin-top: 48px;">
-            <span style="color: var(--slate-500); font-family: 'JetBrains Mono', monospace; font-size: 0.4em; letter-spacing: 3px;">
-              PRESS SPACE TO BEGIN ▸
-            </span>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Juprobe — Jupiter Swap Health Probe | Pitch Deck</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--cyan:#06b6d4;--purple:#a855f7;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--lime:#84cc16;--slate-400:#94a3b8;--slate-600:#475569}
+    body{background:#020617}
+    #particle-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .reveal{font-family:'Inter',system-ui,sans-serif;position:relative;z-index:1}
+    .reveal .slide-background{background:transparent!important}
+    .reveal .slides section{background:transparent}
+    .reveal h1,.reveal h2,.reveal h3{text-transform:none;font-family:'Inter',system-ui,sans-serif;font-weight:800;letter-spacing:-0.03em}
+    .brand-gradient{background:linear-gradient(135deg,var(--lime),var(--green),var(--lime));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gs 4s ease infinite}
+    @keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;font-size:.55em;font-family:'JetBrains Mono',monospace;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(132,204,22,0.3);background:rgba(132,204,22,0.08);color:var(--lime)}
+    .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);animation:pulse 2s ease-in-out infinite;box-shadow:0 0 8px var(--lime)}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+    .glass-card{background:rgba(255,255,255,0.03);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+    .glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)}
+    .glass-card:hover{border-color:rgba(132,204,22,0.25);transform:translateY(-2px);box-shadow:0 8px 32px rgba(132,204,22,0.1)}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:stretch}
+    .metric-value{font-family:'JetBrains Mono',monospace;font-size:3em;font-weight:700;margin:0;line-height:1}
+    .metric-label{font-size:.48em;color:var(--slate-400);text-transform:uppercase;letter-spacing:3px;margin-top:12px;font-weight:600}
+    .icon-ring{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6em;margin-bottom:16px}
+    .icon-ring.lime{background:rgba(132,204,22,0.1);border:1px solid rgba(132,204,22,0.2)}
+    .icon-ring.cyan{background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2)}
+    .icon-ring.green{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2)}
+    .reveal .problem-list{list-style:none;width:90%;text-align:left}
+    .reveal .problem-list li{padding:16px 20px;margin-bottom:12px;border-radius:12px;background:rgba(239,68,68,0.05);border-left:3px solid var(--red);color:#e2e8f0;font-size:.85em;line-height:1.5}
+    .flow-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+    .flow-node{padding:10px 20px;border-radius:10px;font-size:.6em;font-family:'JetBrains Mono',monospace;font-weight:600}
+    .flow-arrow{color:var(--slate-600);font-size:1.2em}
+    .terminal-block{background:#0a0a0a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.5em}
+    .terminal-header{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.06)}
+    .terminal-dot{width:10px;height:10px;border-radius:50%}
+    .terminal-body{padding:16px;line-height:1.8}
+    .t-cyan{color:var(--cyan)}.t-green{color:var(--green)}.t-red{color:var(--red)}.t-lime{color:var(--lime)}.t-amber{color:var(--amber)}.t-dim{color:var(--slate-600)}
+    .link-card{display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:all .3s ease;margin-bottom:10px}
+    .link-card:hover{background:rgba(132,204,22,0.08);border-color:rgba(132,204,22,0.3);transform:translateX(4px)}
+    .link-card .link-label{font-size:.6em;color:var(--lime);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+    .link-card .link-url{font-size:.7em;color:#fff;font-family:'JetBrains Mono',monospace}
+    .link-card .link-icon{font-size:1.4em}
+  </style>
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <div class="badge"><span class="dot"></span> Jupiter V6 API</div>
+        <h1 style="font-size:3.5em;margin-top:24px"><span class="brand-gradient">Juprobe</span></h1>
+        <p style="color:#cbd5e1;font-size:.95em;max-width:640px;margin:16px auto 0;line-height:1.6"><strong style="color:#fff">Jupiter swap health probe.</strong> Real-time route analysis, slippage alerts, and DEX reliability scores — before you swap.</p>
+        <p style="color:var(--slate-400);font-size:.65em;margin-top:40px;letter-spacing:2px;text-transform:uppercase">Colosseum Frontier Hackathon 2026</p>
+      </section>
+      <section>
+        <h2 style="font-size:2em">The <span style="color:var(--red)">Problem</span></h2>
+        <p style="color:var(--slate-400);font-size:.75em;margin-bottom:28px">Swapping on Solana is a black box. You don't know if a route is healthy until it fails.</p>
+        <ul class="problem-list">
+          <li>🔀 <strong>Route opacity</strong> — Jupiter routes through 10+ DEXes. Users don't know which path their swap takes.</li>
+          <li>📉 <strong>Hidden slippage</strong> — Actual execution price differs from quoted. No pre-swap warning system.</li>
+          <li>💀 <strong>DEX failures</strong> — Specific AMMs go down silently. Failed TXs waste time and gas.</li>
+        </ul>
+      </section>
+      <section>
+        <h2 style="font-size:2em">The <span class="brand-gradient">Solution</span></h2>
+        <p style="color:#cbd5e1;font-size:.75em;margin-bottom:24px">Pre-swap diagnostics dashboard. Know before you swap.</p>
+        <div class="grid-3" style="margin-top:20px">
+          <div class="glass-card" style="text-align:left"><div class="icon-ring lime">🔬</div><h3 style="font-size:.9em;color:#fff;margin:0 0 8px">Route Analysis</h3><p style="font-size:.55em;color:var(--slate-400);line-height:1.6">Jupiter V6 quote API → decompose multi-hop routes. See every DEX in the chain.</p></div>
+          <div class="glass-card" style="text-align:left"><div class="icon-ring cyan">📊</div><h3 style="font-size:.9em;color:#fff;margin:0 0 8px">Health Scores</h3><p style="font-size:.55em;color:var(--slate-400);line-height:1.6">Real-time DEX reliability scores based on success rates, latency, and liquidity depth.</p></div>
+          <div class="glass-card" style="text-align:left"><div class="icon-ring green">🚨</div><h3 style="font-size:.9em;color:#fff;margin:0 0 8px">Slippage Alerts</h3><p style="font-size:.55em;color:var(--slate-400);line-height:1.6">Pre-execution warnings when expected slippage exceeds your threshold.</p></div>
+        </div>
+      </section>
+      <section>
+        <h2 style="font-size:1.8em">Probe Diagnostics</h2>
+        <div class="flow-row" style="margin:30px 0 20px">
+          <div class="flow-node" style="background:rgba(132,204,22,0.1);border:1px solid rgba(132,204,22,0.3);color:var(--lime)">Quote API</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" style="background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);color:var(--cyan)">Route Decompose</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--amber)">Health Score</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:var(--green)">Go / No-Go</div>
+        </div>
+        <div class="terminal-block" style="max-width:680px;margin:0 auto">
+          <div class="terminal-header"><div class="terminal-dot" style="background:#ef4444"></div><div class="terminal-dot" style="background:#f59e0b"></div><div class="terminal-dot" style="background:#22c55e"></div><span style="color:var(--slate-400);margin-left:8px">Juprobe Diagnostic</span></div>
+          <div class="terminal-body">
+            <div><span class="t-dim">[quote]</span> <span class="t-lime">🔬</span> SOL → USDC — 3 routes found via Jupiter V6</div>
+            <div><span class="t-dim">[route]</span> <span class="t-cyan">📊</span> Best: Orca → Raydium (2-hop) — health: 98.7%</div>
+            <div><span class="t-dim">[slip]</span> <span class="t-amber">⚠️</span> Expected slippage: 0.12% — within safe threshold</div>
+            <div><span class="t-dim">[ready]</span> <span class="t-green">✓</span> All probes green — safe to swap</div>
           </div>
-        </section>
-
-        <!-- ═══ SLIDE 2: THE PROBLEM ═══ -->
-        <section>
-          <h2>The <span style="color: var(--red);">Problem</span></h2>
-          <p class="sub">Jupiter powers $50B+ in DeFi volume — but developers are flying blind.</p>
-          <div class="feature-grid" style="margin-top: 32px;">
-            <div class="feature-card fragment">
-              <div class="feature-icon">🔇</div>
-              <h3>Silent Rate Limits</h3>
-              <p>Quote API returns empty 200 OK instead of HTTP 429 — breaking every standard retry library.</p>
-            </div>
-            <div class="feature-card fragment">
-              <div class="feature-icon">📈</div>
-              <h3>Latency Blind Spots</h3>
-              <p>Swap p95 hits 854ms during volatility. No public SLA or latency dashboard exists.</p>
-            </div>
-            <div class="feature-card fragment">
-              <div class="feature-icon">❌</div>
-              <h3>Opaque Errors</h3>
-              <p>Generic "Transaction Failed" strings with no error codes, no taxonomy, no debugging path.</p>
-            </div>
-            <div class="feature-card fragment">
-              <div class="feature-icon">🧩</div>
-              <h3>No DX Tooling</h3>
-              <p>Zero open-source stress testing or endpoint health tools for the Jupiter ecosystem.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- ═══ SLIDE 3: LIVE PROBE DEMO ═══ -->
-        <section>
-          <h2><span class="brand-grad">Juprobe</span> in Action</h2>
-          <p class="sub">Real-time multi-endpoint stress testing with live telemetry.</p>
-          <div class="terminal" style="margin-top: 28px;">
-            <div><span class="prompt">root@juprobe:~$</span> ./hammer.sh --endpoints=6 --rps=100</div>
-            <div class="sys">[SYS] Initializing multi-threaded stress probe...</div>
-            <div class="sys">[SYS] Targeting 6 Jupiter endpoints with 100 req/s</div>
-            <div class="ok">[OK]&nbsp; 200 → v6.jup.ag/quote (124ms)</div>
-            <div class="ok">[OK]&nbsp; 200 → token.jup.ag/all (45ms)</div>
-            <div class="ok">[OK]&nbsp; 200 → price.jup.ag/v4 (62ms)</div>
-            <div class="err">[ERR] 429 → v6.jup.ag/swap (silent rate limit detected)</div>
-            <div class="ok">[OK]&nbsp; 200 → jup.ag/limit (85ms)</div>
-            <div class="err">[ERR] TIMEOUT → jup.ag/dca (1205ms — p95 breach)</div>
-            <div class="sys">[SYS] 30,000 requests complete. Generating DX Report...</div>
-            <div><span class="prompt">root@juprobe:~$</span> <span class="cursor"></span></div>
-          </div>
-        </section>
-
-        <!-- ═══ SLIDE 4: KEY FINDINGS ═══ -->
-        <section>
-          <h2>Key <span class="brand-grad">Findings</span></h2>
-          <p class="sub">Real issues discovered from real stress tests against live Jupiter APIs.</p>
-          <div class="finding critical fragment">
-            <div class="tag">🔴 Critical — Silent 429s</div>
-            <div class="desc">
-              The Quote API returns an <code>empty 200 OK</code> body instead of a standard <code>HTTP 429</code> response when rate limits are breached. This breaks <code>retry-after</code> logic in every major HTTP client library.
-            </div>
-          </div>
-          <div class="finding warning fragment">
-            <div class="tag">🟡 Warning — p95 Latency Spikes</div>
-            <div class="desc">
-              Swap API p50 is stellar at <code>215ms</code>, but p95 degrades to <code>854ms</code> during market volatility — causing frontend quote expiration timeouts in optimistic UI implementations.
-            </div>
-          </div>
-        </section>
-
-        <!-- ═══ SLIDE 5: METRICS ═══ -->
-        <section>
-          <h2>Production <span class="brand-grad">Grade</span></h2>
-          <p class="sub">Enterprise engineering standards — not a weekend prototype.</p>
-          <div class="metric-grid">
-            <div class="metric-card fragment">
-              <div class="metric-val">100%</div>
-              <div class="metric-label">Test Coverage</div>
-            </div>
-            <div class="metric-card fragment">
-              <div class="metric-val cyan">Zero</div>
-              <div class="metric-label">Lint Warnings</div>
-            </div>
-            <div class="metric-card fragment">
-              <div class="metric-val amber">6</div>
-              <div class="metric-label">Endpoints Probed</div>
-            </div>
-          </div>
-          <p style="font-size: 0.42em; color: var(--slate-500); margin-top: 36px; font-family: 'JetBrains Mono', monospace;">
-            Next.js 16 · React 19 · Tailwind v4 · Vitest · Full CI/CD Pipeline
-          </p>
-        </section>
-
-        <!-- ═══ SLIDE 6: ARCHITECTURE ═══ -->
-        <section>
-          <h2>How It <span class="brand-grad">Works</span></h2>
-          <p class="sub">Three-phase probe → analyze → report pipeline.</p>
-          <div class="feature-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-top: 32px;">
-            <div class="feature-card fragment" style="text-align: center;">
-              <div class="feature-icon">🔬</div>
-              <h3>1. Probe</h3>
-              <p>Hit every Jupiter endpoint with configurable req/s. Capture latency, status codes, and edge-case responses.</p>
-            </div>
-            <div class="feature-card fragment" style="text-align: center;">
-              <div class="feature-icon">📊</div>
-              <h3>2. Analyze</h3>
-              <p>Compute p50/p95 percentiles, error taxonomies, and rate limit detection across all endpoints.</p>
-            </div>
-            <div class="feature-card fragment" style="text-align: center;">
-              <div class="feature-icon">📋</div>
-              <h3>3. Report</h3>
-              <p>Auto-generate actionable DX reports with specific friction points and engineering recommendations.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- ═══ SLIDE 7: CTA ═══ -->
-        <section>
-          <h1 class="glitch" data-text="JUPROBE" style="font-size: 3.5em;">JUPROBE</h1>
-          <p style="font-size: 0.65em; color: var(--slate-300); margin-top: 12px;">
-            Making Jupiter's DX measurable, debuggable, and better.
-          </p>
-          <div class="cta-box">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; font-size: 0.55em;">
-              <div>
-                <div style="color: var(--slate-500); font-size: 0.8em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 2px;">Live Demo</div>
-                <a href="https://juprobe.edycu.dev" target="_blank">juprobe.edycu.dev ↗</a>
-              </div>
-              <div>
-                <div style="color: var(--slate-500); font-size: 0.8em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 2px;">Source Code</div>
-                <a href="https://github.com/yigent/frontier-jupiter" target="_blank">github.com/yigent/frontier-jupiter ↗</a>
-              </div>
-            </div>
-          </div>
-          <p style="font-size: 0.45em; color: var(--slate-500); margin-top: 40px; font-family: 'JetBrains Mono', monospace;">
-            Built for Jupiter · Powered by Solana · Colosseum Frontier 2026
-          </p>
-        </section>
-
-      </div>
+        </div>
+      </section>
+      <section>
+        <h2 style="font-size:1.8em">Production Ready</h2>
+        <div class="grid-3" style="margin-top:24px">
+          <div class="glass-card" style="text-align:center"><p class="metric-value" style="color:var(--cyan)">100%</p><p class="metric-label">Test Coverage</p></div>
+          <div class="glass-card" style="text-align:center"><p class="metric-value" style="color:var(--green)">Zero</p><p class="metric-label">Lint Warnings</p></div>
+          <div class="glass-card" style="text-align:center"><p class="metric-value" style="color:var(--lime)">10+</p><p class="metric-label">DEXes Monitored</p></div>
+        </div>
+        <div class="flow-row" style="margin-top:28px;gap:20px;flex-wrap:wrap">
+          <span class="badge" style="font-size:.45em">Next.js 16</span><span class="badge" style="font-size:.45em">React 19</span><span class="badge" style="font-size:.45em">Jupiter V6</span><span class="badge" style="font-size:.45em">Tailwind v4</span><span class="badge" style="font-size:.45em">Recharts</span>
+        </div>
+      </section>
+      <section>
+        <h2 style="font-size:2em">Experience <span class="brand-gradient">Juprobe</span></h2>
+        <div style="max-width:420px;margin:32px auto 0">
+          <a href="https://juprobe.edycu.dev" target="_blank" class="link-card"><span class="link-icon">🚀</span><div><div class="link-label">Live Demo</div><div class="link-url">juprobe.edycu.dev</div></div></a>
+          <a href="https://github.com/edycutjong/juprobe" target="_blank" class="link-card"><span class="link-icon">📦</span><div><div class="link-label">Source Code</div><div class="link-url">edycutjong/juprobe</div></div></a>
+        </div>
+        <p style="font-size:.55em;color:var(--slate-600);margin-top:36px;font-style:italic">Probe first. Swap confident.</p>
+      </section>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
-    <script>
-      // ── Particle network background ──
-      (function() {
-        const c = document.getElementById('particles');
-        const ctx = c.getContext('2d');
-        let w, h, particles = [];
-        const COUNT = 60, DIST = 140;
-
-        function resize() {
-          w = c.width = window.innerWidth;
-          h = c.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        for (let i = 0; i < COUNT; i++) {
-          particles.push({
-            x: Math.random() * w, y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
-            r: Math.random() * 1.5 + 0.5
-          });
-        }
-
-        function draw() {
-          ctx.clearRect(0, 0, w, h);
-          for (let i = 0; i < COUNT; i++) {
-            const p = particles[i];
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > w) p.vx *= -1;
-            if (p.y < 0 || p.y > h) p.vy *= -1;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(34, 197, 94, 0.35)';
-            ctx.fill();
-
-            for (let j = i + 1; j < COUNT; j++) {
-              const q = particles[j];
-              const dx = p.x - q.x, dy = p.y - q.y;
-              const d = Math.sqrt(dx * dx + dy * dy);
-              if (d < DIST) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(q.x, q.y);
-                ctx.strokeStyle = `rgba(34, 197, 94, ${0.12 * (1 - d / DIST)})`;
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-              }
-            }
-          }
-          requestAnimationFrame(draw);
-        }
-        draw();
-      })();
-
-      // ── Reveal.js ──
-      Reveal.initialize({
-      hash: true,
-      transition: 'fade',
-      transitionSpeed: 'slow',
-        backgroundTransition: 'none',
-        center: true,
-        controls: true,
-        controlsLayout: 'edges',
-        progress: true,
-        slideNumber: 'c/t'
-      });
-    </script>
-  </body>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+  <script>
+    (function(){const c=document.getElementById('particle-canvas'),x=c.getContext('2d');let p=[];const N=75;function r(){c.width=innerWidth;c.height=innerHeight}addEventListener('resize',r);r();class P{constructor(){this.r()}r(){this.x=Math.random()*c.width;this.y=Math.random()*c.height;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.s=Math.random()*1.5+.5;this.o=Math.random()*.5+.1}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>c.width)this.vx*=-1;if(this.y<0||this.y>c.height)this.vy*=-1}d(){x.beginPath();x.arc(this.x,this.y,this.s,0,Math.PI*2);x.fillStyle=`rgba(132,204,22,${this.o})`;x.fill()}}for(let i=0;i<N;i++)p.push(new P);function a(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.u();q.d()});for(let i=0;i<p.length;i++)for(let j=i+1;j<p.length;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<150){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(132,204,22,${.06*(1-d/150)})`;x.lineWidth=.5;x.stroke()}}requestAnimationFrame(a)}a()})();
+    Reveal.initialize({hash:true,transition:'fade',transitionSpeed:'slow',backgroundTransition:'fade',controls:true,progress:true,center:true,width:1200,height:700});
+  </script>
+</body>
 </html>
