@@ -18,9 +18,10 @@ export function Sparkline({
   variance = 30,
 }: SparklineProps) {
   const [bars] = useState(() => {
-    return Array.from({ length: points }, () =>
-      Math.max(4, Math.min(height, baseValue + (Math.random() - 0.5) * 2 * variance))
-    );
+    return Array.from({ length: points }, (_, i) => {
+      const pseudoRandom = Math.abs((Math.sin(i * 12.9898 + baseValue) * 43758.5453) % 1);
+      return Math.max(4, Math.min(height, baseValue + (pseudoRandom - 0.5) * 2 * variance));
+    });
   });
 
   return (
