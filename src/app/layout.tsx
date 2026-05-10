@@ -17,6 +17,25 @@ export const metadata: Metadata = {
   description: "API stress-test probe for Jupiter endpoints.",
   icons: {
     icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
+  openGraph: {
+    title: "Juprobe | Jupiter API Diagnostics",
+    description: "API stress-test probe for Jupiter endpoints.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Juprobe Dashboard",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Juprobe | Jupiter API Diagnostics",
+    description: "API stress-test probe for Jupiter endpoints.",
+    images: ["/og-image.png"],
   },
 };
 
