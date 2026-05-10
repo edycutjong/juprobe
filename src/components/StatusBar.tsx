@@ -5,18 +5,10 @@ import { useEffect, useState } from "react";
 export function StatusBar() {
   const [latency, setLatency] = useState(12);
   const [uptime] = useState("99.97");
-  const [time, setTime] = useState(() => 
-    new Date().toLocaleTimeString("en-US", {
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })
-  );
+  const [time, setTime] = useState("--:--:--");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLatency(Math.floor(Math.random() * 8) + 9);
+    const updateTime = () => {
       setTime(
         new Date().toLocaleTimeString("en-US", {
           hour12: false,
@@ -25,6 +17,12 @@ export function StatusBar() {
           second: "2-digit",
         })
       );
+    };
+    updateTime();
+
+    const interval = setInterval(() => {
+      setLatency(Math.floor(Math.random() * 8) + 9);
+      updateTime();
     }, 1000);
     return () => clearInterval(interval);
   }, []);
