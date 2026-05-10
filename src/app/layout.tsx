@@ -15,6 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Juprobe | Jupiter API Diagnostics",
   description: "API stress-test probe for Jupiter endpoints.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
