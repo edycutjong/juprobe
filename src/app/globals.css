@@ -13,11 +13,325 @@
   :root {
     --background: var(--color-slate-950);
     --foreground: #f8fafc;
+    --glow-green: rgba(34, 197, 94, 0.15);
+    --glow-cyan: rgba(6, 182, 212, 0.15);
+    --glow-amber: rgba(245, 158, 11, 0.15);
+    --glow-red: rgba(239, 68, 68, 0.15);
   }
 
   html, body {
     background-color: var(--background);
     color: var(--foreground);
     @apply antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.5);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATED GRID BACKGROUND 
+   ═══════════════════════════════════════════════════════════ */
+.bg-grid-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 70%);
+}
+
+/* Floating orb glow */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.bg-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.2), transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation-delay: 0s;
+}
+.bg-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
+  bottom: -50px;
+  left: -100px;
+  animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+  75% { transform: translate(10px, 15px) scale(1.02); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLASSMORPHISM CARDS
+   ═══════════════════════════════════════════════════════════ */
+.glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(51, 65, 85, 0.7);
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.06);
+  transform: translateY(-2px);
+}
+
+.glass-card-static {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STATUS GLOW INDICATORS
+   ═══════════════════════════════════════════════════════════ */
+.status-dot {
+  position: relative;
+}
+.status-dot::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+.status-optimal::before { background: rgba(34, 197, 94, 0.3); }
+.status-warning::before { background: rgba(245, 158, 11, 0.3); }
+.status-critical::before { background: rgba(239, 68, 68, 0.3); }
+
+@keyframes statusPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(2); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SPARKLINE BARS (Animated)
+   ═══════════════════════════════════════════════════════════ */
+.sparkline-bar {
+  display: inline-block;
+  width: 3px;
+  border-radius: 1.5px;
+  animation: sparkGrow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes sparkGrow {
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TERMINAL / PROBE EFFECTS
+   ═══════════════════════════════════════════════════════════ */
+.terminal-window {
+  position: relative;
+  overflow: hidden;
+}
+.terminal-window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.terminal-glow {
+  box-shadow:
+    0 0 15px rgba(34, 197, 94, 0.08),
+    inset 0 0 60px rgba(34, 197, 94, 0.02);
+}
+
+/* Log entry animation */
+.log-entry {
+  animation: logSlide 0.15s ease-out both;
+}
+@keyframes logSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Typing cursor blink */
+.cursor-blink {
+  animation: cursorBlink 1s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAT COUNTER
+   ═══════════════════════════════════════════════════════════ */
+.stat-value {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLOW BUTTON
+   ═══════════════════════════════════════════════════════════ */
+.glow-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.glow-button::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.5), rgba(6, 182, 212, 0.5));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  filter: blur(8px);
+}
+.glow-button:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER LOGO ANIMATION
+   ═══════════════════════════════════════════════════════════ */
+.logo-icon {
+  position: relative;
+  overflow: hidden;
+}
+.logo-icon::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(34, 197, 94, 0.15) 50%,
+    transparent 60%
+  );
+  animation: logoShine 3s ease-in-out infinite;
+}
+@keyframes logoShine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REPORT GRADIENT ACCENTS
+   ═══════════════════════════════════════════════════════════ */
+.gradient-text {
+  background: linear-gradient(135deg, #22c55e, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  border-image: linear-gradient(135deg, rgba(34, 197, 94, 0.5), rgba(6, 182, 212, 0.5)) 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PING WAVE (Hero Section)
+   ═══════════════════════════════════════════════════════════ */
+.ping-wave {
+  position: relative;
+}
+.ping-wave::before,
+.ping-wave::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid currentColor;
+  animation: pingWave 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.ping-wave::after {
+  animation-delay: 0.5s;
+}
+@keyframes pingWave {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   METRIC CARD BORDER GLOW
+   ═══════════════════════════════════════════════════════════ */
+.metric-card-optimal {
+  border-left: 2px solid rgba(34, 197, 94, 0.5);
+  box-shadow: -4px 0 12px rgba(34, 197, 94, 0.05);
+}
+.metric-card-warning {
+  border-left: 2px solid rgba(245, 158, 11, 0.5);
+  box-shadow: -4px 0 12px rgba(245, 158, 11, 0.05);
+}
+.metric-card-critical {
+  border-left: 2px solid rgba(239, 68, 68, 0.5);
+  box-shadow: -4px 0 12px rgba(239, 68, 68, 0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OVERALL HEALTH RING
+   ═══════════════════════════════════════════════════════════ */
+.health-ring {
+  animation: healthPulse 3s ease-in-out infinite;
+}
+@keyframes healthPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.3)); }
+  50% { filter: drop-shadow(0 0 16px rgba(34, 197, 94, 0.5)); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAGGER ANIMATION UTILITY
+   ═══════════════════════════════════════════════════════════ */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }

@@ -15,7 +15,7 @@ export class JupiterProbeService {
         slippageBps: 50,
       });
       return { success: true, latency: Date.now() - start };
-    } catch (error) {
+    } catch {
       return { success: false, latency: Date.now() - start };
     }
   }
@@ -41,7 +41,7 @@ export class JupiterProbeService {
       });
       
       return { success: true, latency: Date.now() - start };
-    } catch (error) {
+    } catch {
       // It might fail because of the dummy key, but we still measure latency
       return { success: false, latency: Date.now() - start };
     }
